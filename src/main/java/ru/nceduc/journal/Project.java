@@ -1,7 +1,6 @@
-package com.thirdmadman.EducStaff;
+package ru.nceduc.journal;
 
 import java.util.Date;
-import java.util.List;
 
 public class Project extends AbstractEntity {
 

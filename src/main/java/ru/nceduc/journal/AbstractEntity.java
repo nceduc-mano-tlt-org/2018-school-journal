@@ -1,4 +1,4 @@
-package com.thirdmadman.EducStaff;
+package ru.nceduc.journal;
 
 abstract class AbstractEntity {
     private String id = null;

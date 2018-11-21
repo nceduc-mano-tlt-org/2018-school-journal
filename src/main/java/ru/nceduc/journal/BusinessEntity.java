@@ -1,4 +1,4 @@
-package com.thirdmadman.EducStaff;
+package ru.nceduc.journal;
 
 public abstract class BusinessEntity {
     private Project project = null;

@@ -1,4 +1,4 @@
-package com.thirdmadman.EducStaff;
+package ru.nceduc.journal;
 
 public abstract class Person extends BusinessEntity {
     private String firstname = null;

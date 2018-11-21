@@ -1,4 +1,4 @@
-package com.thirdmadman.EducStaff;
+package ru.nceduc.journal;
 
 public class Group extends BusinessEntity {
     private Section section;

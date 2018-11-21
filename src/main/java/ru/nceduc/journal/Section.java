@@ -1,4 +1,4 @@
-package com.thirdmadman.EducStaff;
+package ru.nceduc.journal;
 
 import java.util.List;
 
