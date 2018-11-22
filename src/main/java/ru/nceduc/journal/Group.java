@@ -1,7 +1,9 @@
 package ru.nceduc.journal;
 
-public class Group extends BusinessEntity {
+public class Group extends BusinessEntity{
+
     private Section section;
+    private String groupName;
 
     public Section getSection() {
         return section;
@@ -9,5 +11,9 @@ public class Group extends BusinessEntity {
 
     public void setSection(Section section) {
         this.section = section;
+    }
+
+    public Group(String groupName) {
+        this.groupName = groupName;
     }
 }

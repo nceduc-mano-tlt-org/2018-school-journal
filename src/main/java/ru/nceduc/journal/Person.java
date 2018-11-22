@@ -1,6 +1,6 @@
 package ru.nceduc.journal;
 
-public abstract class Person extends BusinessEntity {
+public abstract class Person extends AbstractEntity{
     private String firstname = null;
     private String lastName = null;
 

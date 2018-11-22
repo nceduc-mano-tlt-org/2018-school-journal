@@ -5,9 +5,14 @@ import java.util.Date;
 public class JournalApplication {
 
     public static void main (String args[]) {
-        Project gg = new Project();
-        gg.setCreatedDate(new Date());
-        gg.setId("fff");
 
+
+
+        gg.createEntity();
+        Section box = new Section();
+        box.addGroup(new Group("Box1"));
+        gg.getEntity().addSection(box);
+        Teacher Andrey = new Teacher();
+        Andrey
     }
 }
