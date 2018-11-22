@@ -18,7 +18,7 @@ public class Project extends AbstractEntity {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    private void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 

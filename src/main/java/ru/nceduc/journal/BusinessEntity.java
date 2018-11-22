@@ -1,12 +1,13 @@
 package ru.nceduc.journal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BusinessEntity {
 
     private Project project = null;
 
-    private List<Section> sections = null;
+    private List<Section> sections = new ArrayList<Section>();
 
     public Project getProject() {
         return project;
@@ -20,9 +21,6 @@ public class BusinessEntity {
         sections.add(section);
     }
 
-    public void addSection() {
-        sections.add(new Section());
-    }
 
     public List<Section> getSections() {
         return sections;

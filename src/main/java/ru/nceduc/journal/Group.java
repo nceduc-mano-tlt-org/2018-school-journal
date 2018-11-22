@@ -16,4 +16,8 @@ public class Group extends BusinessEntity{
     public Group(String groupName) {
         this.groupName = groupName;
     }
+
+    public String getGroupName() {
+        return groupName;
+    }
 }
