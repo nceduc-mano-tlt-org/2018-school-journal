@@ -1,9 +1,35 @@
 package ru.nceduc.journal;
 
-public class Group extends BusinessEntity{
+import java.util.ArrayList;
+import java.util.List;
+
+public class Group extends BusinessEntity {
 
     private Section section;
-    private String groupName;
+    private Teacher teacher;
+    private List<Student> students;
+
+    public Group(String id, Project project, Section section) {
+        super(id, project);
+        this.section = section;
+        this.students = new ArrayList<Student>();
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public void addStudent(Student student) {
+        this.students.add(student);
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
 
     public Section getSection() {
         return section;
@@ -11,13 +37,5 @@ public class Group extends BusinessEntity{
 
     public void setSection(Section section) {
         this.section = section;
-    }
-
-    public Group(String groupName) {
-        this.groupName = groupName;
-    }
-
-    public String getGroupName() {
-        return groupName;
     }
 }

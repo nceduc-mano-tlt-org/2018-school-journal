@@ -1,19 +1,27 @@
 package ru.nceduc.journal;
 
-public abstract class Person extends BusinessEntity{
-    private String firstname = null;
-    private String lastName = null;
+public abstract class Person extends BusinessEntity {
 
-    public String getFirstname() {
-        return firstname;
+    private String firstName;
+    private String lastName;
+
+    public Person(String id, Project project,
+                  String firstName, String lastName) {
+        super(id, project);
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public void setLastName(String lastName) {
