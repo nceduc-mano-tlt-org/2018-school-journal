@@ -19,4 +19,14 @@ public class Teacher extends Person {
     public List<Group> getGroups() {
         return groups;
     }
+
+    public boolean equals(Teacher t){
+        if(t.getId() == this.getId()
+                && t.getProject() == this.getProject()
+                && t.getFirstName() == this.getFirstName()
+                && t.getLastName() == this.getLastName())
+            return true;
+        else
+            return false;
+        }
 }
