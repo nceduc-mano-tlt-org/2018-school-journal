@@ -1,4 +1,4 @@
-package ru.nceduc.journal;
+package ru.nceduc.journal.entity;
 
 public abstract class Person extends BusinessEntity {
 
