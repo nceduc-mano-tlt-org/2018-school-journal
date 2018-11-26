@@ -16,6 +16,9 @@ public class Group extends BusinessEntity {
     }
 
     public Teacher getTeacher() {
+        if (teacher == null) {
+            throw new IllegalArgumentException("Teacher not found!");
+        }
         return teacher;
     }
 
@@ -28,10 +31,16 @@ public class Group extends BusinessEntity {
     }
 
     public List<Student> getStudents() {
+        if (students == null){
+            throw new IllegalArgumentException("Student List not found!");
+        }
         return students;
     }
 
     public Section getSection() {
+        if (section == null) {
+            throw new IllegalArgumentException("Section not found!");
+        }
         return section;
     }
 

@@ -17,6 +17,9 @@ public class Section extends BusinessEntity {
     }
 
     public List<Group> getGroups() {
+        if (groups == null){
+            throw new IllegalArgumentException("Group List not found!");
+        }
         return groups;
     }
 }
