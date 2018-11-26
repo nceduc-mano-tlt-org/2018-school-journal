@@ -16,9 +16,9 @@ public class Group extends BusinessEntity {
     }
 
     public Teacher getTeacher() {
-        if (teacher == null) {
-            throw new IllegalArgumentException("Teacher not found!");
-        }
+            if (teacher == null) {
+                throw new IllegalArgumentException("Teacher not found!");
+            }
         return teacher;
     }
 
