@@ -3,25 +3,20 @@ package ru.nceduc.journal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Section extends BusinessEntity{
-    ArrayList <Group> groups;
-    private String NameOfSection;
-    
-    Section(){
-       super();         // вызов конструктора BusinessEntity
-       groups = new ArrayList<Group>();
+public class Section extends BusinessEntity {
+
+    private List<Group> groups;
+
+    public Section(String id, Project project) {
+        super(id, project);
+        this.groups = new ArrayList<Group>();
     }
- 
-    public void setGroupList(Group group){
-        groups.add(group);
+
+    public void addGroup(Group group) {
+        this.groups.add(group);
     }
-    public void setNameOfSection(String NameOfSection){
-        this.NameOfSection = NameOfSection;
-    }
-    public String getNameOfSection(){
-        return NameOfSection;
-    }
-    public List<Group> getGroupList(){
+
+    public List<Group> getGroups() {
         return groups;
     }
 }

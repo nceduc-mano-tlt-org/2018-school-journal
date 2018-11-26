@@ -1,12 +1,41 @@
 package ru.nceduc.journal;
 
-public abstract class AbstractEntity {
+import java.util.Date;
+
+abstract class AbstractEntity {
+
     private String id;
-    
-    public void setID(String id){
+    private Date createdDate;
+    private Date modifiedDate;
+
+    public AbstractEntity(String id) {
+        this.id = id;
+        this.createdDate = new Date();
+        this.modifiedDate = new Date();
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    public void setId(String id) {
         this.id = id;
     }
-    public String getID(){
+
+    public String getId() {
         return id;
     }
+
 }
