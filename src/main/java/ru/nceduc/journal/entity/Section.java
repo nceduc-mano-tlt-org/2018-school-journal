@@ -1,4 +1,4 @@
-package ru.nceduc.journal;
+package ru.nceduc.journal.entity;
 
 import java.util.ArrayList;
 import java.util.List;
