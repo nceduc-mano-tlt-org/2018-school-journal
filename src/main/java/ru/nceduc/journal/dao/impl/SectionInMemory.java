@@ -1,52 +1,61 @@
 package ru.nceduc.journal.dao.impl;
 
 import ru.nceduc.journal.dao.SectionDao;
-import ru.nceduc.journal.Project;
 import ru.nceduc.journal.Section;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class SectionInMemory implements SectionDao{
-    private Map<String, Section> Sections;
+    private Map<String, Section> sections;
 
     public SectionInMemory(){
-        Sections = new HashMap<String, Section>();
+        sections = new ConcurrentHashMap<>();
     }
 
     @Override
-    public void add(Section section) {
-        Sections.put(section.getId(),section);
+    public void create(Section section) {
+        sections.put(section.getId(),section);
     }
 
-    @Override
-    public void create(String id, Project project) {
-        Section section = new Section(id,project);
-        Sections.put(section.getId(),section);
-    }
+//    @Override
+//    public void create(String id, Project project) {
+//        Section section = new Section(id,project);
+//        sections.put(section.getId(),section);
+//    }
 
     @Override
     public Section read(String id) {
-        return Sections.get(id);
+        return sections.get(id);
     }
 
     @Override
     public void update(String id,Section section) {
-        Sections.replace(id,section);
+        sections.computeIfPresent(id, (s, section1) -> section1);
     }
 
     @Override
     public void delete(Section section) {
-        Sections.remove(section.getId());
+        sections.remove(section.getId());
     }
 
     @Override
     public void deleteById(String id) {
-        Sections.remove(id);
+        sections.remove(id);
     }
 
     @Override
-    public Map<String, Section> getAll() {
-        return Sections;
+    public List<Section> getAll() {
+        return sections.entrySet()
+                .stream()
+                .filter(Objects::nonNull)
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteAll() {
+        sections.clear();
     }
 }
