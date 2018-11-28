@@ -3,7 +3,6 @@ package ru.nceduc.journal.dao.impl.tests;
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.junit.Assert.*;
 import ru.nceduc.journal.Project;
 import ru.nceduc.journal.Section;
 
