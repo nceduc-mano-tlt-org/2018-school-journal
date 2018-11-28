@@ -19,4 +19,14 @@ public class Section extends BusinessEntity {
     public List<Group> getGroups() {
         return groups;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Section section = (Section) obj;
+        if (section.getId() == this.getId()
+        && section.getProject() == this.getProject()){
+            return true;
+        }
+        return false;
+    }
 }
