@@ -1,15 +1,14 @@
-package ru.nceduc.journal.manager;
+package ru.nceduc.journal.dao;
 
 import ru.nceduc.journal.entity.Group;
 import ru.nceduc.journal.entity.Project;
 import ru.nceduc.journal.entity.Section;
 
+import java.util.List;
 import java.util.Map;
 
-public interface iManagerGroup {
-    void add(Group group);
-
-    void create(String id, Project project , Section section);
+public interface ManagerGroupDao {
+    void save(Group group);
 
     Group getGroup(String id);
 
@@ -17,6 +16,6 @@ public interface iManagerGroup {
 
     void deleteById(String id);
 
-    Map<String, Group> getGroups();
+    List<Group> getGroups();
 
 }
