@@ -1,0 +1,11 @@
+ru\nceduc\journal\entity\Group.class
+ru\nceduc\journal\dao\impl\TeacherInMemory.class
+ru\nceduc\journal\entity\BusinessEntity.class
+ru\nceduc\journal\dao\TeacherDao.class
+ru\nceduc\journal\entity\Student.class
+ru\nceduc\journal\entity\Teacher.class
+ru\nceduc\journal\entity\Project.class
+ru\nceduc\journal\entity\Section.class
+ru\nceduc\journal\JournalApplication.class
+ru\nceduc\journal\entity\AbstractEntity.class
+ru\nceduc\journal\entity\Person.class
