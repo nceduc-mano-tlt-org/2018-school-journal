@@ -20,7 +20,7 @@ public class Teacher extends Person {
         return groups;
     }
 
-    public boolean equals(Teacher t){
+  /*  public boolean equals(Teacher t){
         if(t.getId() == this.getId()
                 && t.getProject() == this.getProject()
                 && t.getFirstName() == this.getFirstName()
@@ -29,4 +29,5 @@ public class Teacher extends Person {
         else
             return false;
         }
+  */
 }

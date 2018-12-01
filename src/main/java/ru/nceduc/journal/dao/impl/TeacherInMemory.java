@@ -1,52 +1,56 @@
 package ru.nceduc.journal.dao.impl;
 
 import ru.nceduc.journal.dao.TeacherDao;
-import ru.nceduc.journal.entity.Project;
 import ru.nceduc.journal.entity.Teacher;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class TeacherInMemory implements TeacherDao {
     private Map<String, Teacher> teachers;
 
     public TeacherInMemory(){
-        teachers = new HashMap<String, Teacher>();
+        teachers = new HashMap<>();
     }
 
-    public void add(Teacher teacher){
+    @Override
+    public void create(Teacher teacher) {
         teachers.put(teacher.getId(), teacher);
     }
 
-    public void create(String id,
-                          Project project,
-                          String firstName,
-                          String lastName) {
-        Teacher teacher = new Teacher(id, null, firstName, lastName);
-        teachers.put(id, teacher);
-    }
-
+    @Override
     public Teacher read(String id) {
        return teachers.get(id);
     }
 
+    @Override
     public void update(Teacher teacher) {
-        //  teachers.get(teacher.getId()).setProject(teacher.getProject());
-        String id = teacher.getId();
-        teachers.get(id).setFirstName(teacher.getFirstName());
-        teachers.get(id).setLastName(teacher.getLastName());
+       Teacher result = teachers.get(teacher.getId());
+       result.setProject(teacher.getProject());
+       result.setFirstName(teacher.getFirstName());
+       result.setLastName(teacher.getLastName());
     }
 
-    public void delete(Teacher teacher) {
-        teachers.remove(teacher.getId());
-    }
-
-    public void deleteById(String id) {
+    @Override
+    public void delete(String id) {
         teachers.remove(id);
     }
 
-    public Map<String, Teacher> getAll() {
-        return teachers;
+    @Override
+    public List<Teacher> getAll() {
+        return teachers.entrySet()
+                .stream()
+                .filter(Objects::nonNull)
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteAll(){
+        teachers.clear();
     }
 }
 
