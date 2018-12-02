@@ -20,13 +20,4 @@ public class Section extends BusinessEntity {
         return groups;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        Section section = (Section) obj;
-        if (section.getId() == this.getId()
-        && section.getProject() == this.getProject()){
-            return true;
-        }
-        return false;
-    }
 }

@@ -1,14 +1,11 @@
 package ru.nceduc.journal.dao;
 
-import ru.nceduc.journal.Project;
-import ru.nceduc.journal.Section;
+import ru.nceduc.journal.entity.Section;
 
 import java.util.List;
-import java.util.Map;
 
 public interface SectionDao {
     void create(Section section);
-//    void create(String id, Project project);
     Section read(String id);
     public void update(String id, Section section);
     public void delete(Section section);

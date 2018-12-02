@@ -1,7 +1,7 @@
 package ru.nceduc.journal.dao.impl;
 
 import ru.nceduc.journal.dao.SectionDao;
-import ru.nceduc.journal.Section;
+import ru.nceduc.journal.entity.Section;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,11 +19,6 @@ public class SectionInMemory implements SectionDao{
         sections.put(section.getId(),section);
     }
 
-//    @Override
-//    public void create(String id, Project project) {
-//        Section section = new Section(id,project);
-//        sections.put(section.getId(),section);
-//    }
 
     @Override
     public Section read(String id) {
@@ -32,7 +27,7 @@ public class SectionInMemory implements SectionDao{
 
     @Override
     public void update(String id,Section section) {
-        sections.computeIfPresent(id, (s, section1) -> section1);
+        sections.replace(id,section);
     }
 
     @Override
