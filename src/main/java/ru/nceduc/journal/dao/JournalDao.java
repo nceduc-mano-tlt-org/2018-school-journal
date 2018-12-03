@@ -1,0 +1,33 @@
+package ru.nceduc.journal.dao;
+
+import java.util.Collection;
+
+public interface JournalDao<E> {
+
+    /**
+     * @throws IllegalArgumentException if the id is the empty string or null
+     */
+    E find(String id);
+
+
+    /**
+     * @throws IllegalArgumentException if the entity is null or its id is the empty string or null
+     */
+    void add(E entity);
+
+
+    /**
+     * @throws IllegalArgumentException if the id is the empty string or null
+     */
+    void remove(String id);
+
+
+    Collection<E> findAll();
+
+
+    /**
+     * If there is no such entity then nothing will happen
+     * @throws IllegalArgumentException if the entity is null or its id is the empty string or null
+     */
+    void update(E entity);
+}

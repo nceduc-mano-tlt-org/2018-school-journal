@@ -1,8 +1,8 @@
-package ru.nceduc.journal;
+package ru.nceduc.journal.entity;
 
 import java.util.Date;
 
-abstract class AbstractEntity {
+public abstract class AbstractEntity {
 
     private String id;
     private Date createdDate;

@@ -1,14 +1,14 @@
-package ru.nceduc.journal;
+package ru.nceduc.journal.entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Teacher extends Person {
+public class Section extends BusinessEntity {
 
     private List<Group> groups;
 
-    public Teacher(String id, Project project, String firstName, String lastName) {
-        super(id, project, firstName, lastName);
+    public Section(String id, Project project) {
+        super(id, project);
         this.groups = new ArrayList<Group>();
     }
 
