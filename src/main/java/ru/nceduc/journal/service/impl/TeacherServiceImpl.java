@@ -13,41 +13,46 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Teacher create() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Teacher remove(String id) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Teacher update(Teacher entity) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Teacher find(String id) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Collection<Teacher> findAll() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Collection<Teacher> findAllInCurrentProject() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void assignToGroup(String teacherId, String groupId) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void reassignGroup(String oldGroupId, String newGroupId) {
+        throw new UnsupportedOperationException();
+    }
 
+    @Override
+    public void removeAssignment(String teacherId, String groupId) {
+        throw new UnsupportedOperationException();
     }
 }

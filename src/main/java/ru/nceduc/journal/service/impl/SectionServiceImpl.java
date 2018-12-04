@@ -13,31 +13,31 @@ public class SectionServiceImpl implements SectionService {
 
     @Override
     public Section create() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Section remove(String id) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Section update(Section entity) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Section find(String id) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Collection<Section> findAll() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Collection<Section> findAllInCurrentProject() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 }

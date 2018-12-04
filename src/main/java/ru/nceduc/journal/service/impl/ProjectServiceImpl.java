@@ -13,36 +13,36 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project getCurrentProject() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Project create() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Project remove(String id) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Project update(Project entity) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Project find(String id) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Collection<Project> findAll() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Collection<Project> findAllInCurrentProject() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 }
