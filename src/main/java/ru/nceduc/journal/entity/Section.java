@@ -9,14 +9,18 @@ public class Section extends BusinessEntity {
 
     public Section(String id, Project project) {
         super(id, project);
-        this.groups = new ArrayList<Group>();
+        this.groups = new ArrayList<>();
     }
 
-    public void addGroup(Group group) {
+    void addGroup(Group group) {
         this.groups.add(group);
     }
 
+    void removeGroup(Group group) {
+        this.groups.remove(group);
+    }
+
     public List<Group> getGroups() {
-        return groups;
+        return new ArrayList<>(groups);
     }
 }

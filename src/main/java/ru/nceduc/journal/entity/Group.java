@@ -1,41 +1,63 @@
 package ru.nceduc.journal.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Group extends BusinessEntity {
+@Getter
+public class Group extends BusinessEntity implements Assignable<Section> {
 
-    private Section section;
+    @Setter
     private Teacher teacher;
+    private Section section;
     private List<Student> students;
+    private List<Teacher> teachers;
 
     public Group(String id, Project project, Section section) {
         super(id, project);
+        this.students = new ArrayList<>();
+        this.teachers = new ArrayList<>();
+        assignTo(section);
+    }
+
+    void addStudent(Student student) {
+        if (!this.students.contains(student))
+            this.students.add(student);
+    }
+
+    void removeStudent(Student student) {
+        this.students.remove(student);
+    }
+
+    void addTeacher(Teacher teacher) {
+        if (!this.teachers.contains(teacher))
+            this.teachers.add(teacher);
+    }
+
+    void removeTeacher(Teacher teacher) {
+        this.teachers.remove(teacher);
+    }
+
+    @Override
+    public void assignTo(Section section) {
         this.section = section;
-        this.students = new ArrayList<Student>();
+        this.section.addGroup(this);
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    @Override
+    public void removeAssignment(Section target) {
+        throw new IllegalStateException("Group cannot exist without a parent Section.");
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
-    public void addStudent(Student student) {
-        this.students.add(student);
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public Section getSection() {
-        return section;
-    }
-
-    public void setSection(Section section) {
-        this.section = section;
+    @Override
+    public void reassign(Section source, Section target) {
+        if (this.section.getId().equals(source.getId())) {
+            source.removeGroup(this);
+            assignTo(target);
+        }
     }
 }

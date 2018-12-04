@@ -13,6 +13,7 @@ public class GenericInMemoryDao<E extends AbstractEntity> implements JournalDao<
 
     private final Map<String, E> entities = new HashMap<>();
 
+
     public E find(String id) {
         if (StringUtils.isEmpty(id)) {
             throw new IllegalArgumentException("The ID must not be null");
@@ -21,30 +22,32 @@ public class GenericInMemoryDao<E extends AbstractEntity> implements JournalDao<
         return entities.get(id);
     }
 
-    public void add(E entity) {
+    public E add(E entity) {
         if (entity == null || StringUtils.isEmpty(entity.getId()))
             throw new IllegalArgumentException("Neither entity nor ID must not be null");
 
-        entities.putIfAbsent(entity.getId(), entity);
+        return entities.putIfAbsent(entity.getId(), entity);
     }
 
-    public void remove(String id) {
+    public E remove(String id) {
         if (StringUtils.isEmpty(id)) {
             throw new IllegalArgumentException("The ID must not be null");
         }
 
-        entities.remove(id);
+        return entities.remove(id);
     }
 
     public Collection<E> findAll() {
         return new ArrayList<>(entities.values());
     }
 
-    public void update(E entity) {
+    public E update(E entity) {
         if (entity == null || StringUtils.isEmpty(entity.getId()))
             throw new IllegalArgumentException("Neither entity nor ID must not be null");
 
         if (entities.containsKey(entity.getId()))
-            entities.put(entity.getId(), entity);
+            return entities.put(entity.getId(), entity);
+
+        return null;
     }
 }

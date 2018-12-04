@@ -30,9 +30,9 @@ public class TeacherInMemoryDaoTest {
         Teacher t2 = new Teacher("5", project, "Garik", "Harlamov");
         Teacher t3 = new Teacher("6", project, "Garik", "Martirosian");
 
-        t1.addGroup(g1);
-        t2.addGroup(g1);
-        t3.addGroup(g2);
+        t1.assignTo(g1);
+        t2.assignTo(g1);
+        t3.assignTo(g2);
 
         dao.add(t1);
         dao.add(t2);

@@ -1,5 +1,8 @@
 package ru.nceduc.journal.entity;
 
+import lombok.Data;
+
+@Data
 public abstract class Person extends BusinessEntity {
 
     private String firstName;
@@ -9,22 +12,6 @@ public abstract class Person extends BusinessEntity {
                   String firstName, String lastName) {
         super(id, project);
         this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 }

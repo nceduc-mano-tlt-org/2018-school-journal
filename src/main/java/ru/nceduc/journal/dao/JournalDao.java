@@ -13,13 +13,13 @@ public interface JournalDao<E> {
     /**
      * @throws IllegalArgumentException if the entity is null or its id is the empty string or null
      */
-    void add(E entity);
+    E add(E entity);
 
 
     /**
      * @throws IllegalArgumentException if the id is the empty string or null
      */
-    void remove(String id);
+    E remove(String id);
 
 
     Collection<E> findAll();
@@ -29,5 +29,5 @@ public interface JournalDao<E> {
      * If there is no such entity then nothing will happen
      * @throws IllegalArgumentException if the entity is null or its id is the empty string or null
      */
-    void update(E entity);
+    E update(E entity);
 }
