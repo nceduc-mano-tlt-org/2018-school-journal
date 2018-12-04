@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface GenericJournalService<E extends AbstractEntity> {
 
-    E save();
+    E create();
 
     E remove(String id);
 

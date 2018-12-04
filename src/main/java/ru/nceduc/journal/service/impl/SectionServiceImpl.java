@@ -12,7 +12,7 @@ public class SectionServiceImpl implements SectionService {
     private JournalDao<Section> sectionDao = new GenericInMemoryDao<>();
 
     @Override
-    public Section save() {
+    public Section create() {
         throw new UnsupportedOperationException();
     }
 

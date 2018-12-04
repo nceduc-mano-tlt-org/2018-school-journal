@@ -12,7 +12,7 @@ public class GroupServiceImpl implements GroupService {
     private JournalDao<Group> groupDao = new GenericInMemoryDao<>();
 
     @Override
-    public Group save() {
+    public Group create() {
         throw new UnsupportedOperationException();
     }
 
