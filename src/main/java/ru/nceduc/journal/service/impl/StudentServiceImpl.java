@@ -12,7 +12,7 @@ public class StudentServiceImpl implements StudentService {
     private JournalDao<Student> studentDao = new GenericInMemoryDao<>();
 
     @Override
-    public Student create() {
+    public Student save() {
         throw new UnsupportedOperationException();
     }
 

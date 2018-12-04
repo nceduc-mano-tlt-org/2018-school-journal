@@ -17,7 +17,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project create() {
+    public Project save() {
         throw new UnsupportedOperationException();
     }
 
