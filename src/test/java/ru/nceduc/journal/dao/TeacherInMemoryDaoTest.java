@@ -118,7 +118,11 @@ public class TeacherInMemoryDaoTest {
         dao.update(teacher);
 
         Teacher actual = dao.find("17");
-        Assert.assertNull(actual);
+        Assert.assertEquals("17", actual.getId());
+        Assert.assertEquals("Garik", actual.getFirstName());
+        Assert.assertEquals("Gipopotamov", actual.getLastName());
+        Assert.assertEquals("300", actual.getProject().getId());
+        Assert.assertTrue(actual.getGroups().isEmpty());
     }
 
     @Test(expected = IllegalArgumentException.class)
