@@ -12,11 +12,6 @@ public class StudentServiceImpl implements StudentService {
     private JournalDao<Student> studentDao = new GenericInMemoryDao<>();
 
     @Override
-    public Student create() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Student remove(String id) {
         throw new UnsupportedOperationException();
     }
@@ -38,6 +33,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Collection<Student> findAllInCurrentProject() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Student createStudent(String firstName, String lastName) {
         throw new UnsupportedOperationException();
     }
 

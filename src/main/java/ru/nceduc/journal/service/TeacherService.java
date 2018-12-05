@@ -4,6 +4,9 @@ import ru.nceduc.journal.entity.Teacher;
 
 public interface TeacherService extends GenericJournalService<Teacher> {
 
+    //todo Do we need to bind a teacher with a group at once or not?
+    Teacher createTeacher(String firstName, String lastName);
+
     /**
      * Assigns the specified teacher to the group.
      * @param teacherId specifies the teacher which will be assigned to the group

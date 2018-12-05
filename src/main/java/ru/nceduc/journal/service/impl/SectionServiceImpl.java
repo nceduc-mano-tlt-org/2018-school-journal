@@ -12,11 +12,6 @@ public class SectionServiceImpl implements SectionService {
     private JournalDao<Section> sectionDao = new GenericInMemoryDao<>();
 
     @Override
-    public Section create() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Section remove(String id) {
         throw new UnsupportedOperationException();
     }
@@ -38,6 +33,11 @@ public class SectionServiceImpl implements SectionService {
 
     @Override
     public Collection<Section> findAllInCurrentProject() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Section createSection(String name) {
         throw new UnsupportedOperationException();
     }
 }

@@ -4,6 +4,9 @@ import ru.nceduc.journal.entity.Student;
 
 public interface StudentService extends GenericJournalService<Student> {
 
+    //todo Do we need to bind a student with a group at once or not?
+    Student createStudent(String firstName, String lastName);
+
     /**
      * Assigns the specified student to the group.
      * @param studentId specifies the student which will be assigned to the group

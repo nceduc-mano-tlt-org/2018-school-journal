@@ -12,12 +12,12 @@ public class ProjectServiceImpl implements ProjectService {
     private JournalDao<Project> projectDao = new GenericInMemoryDao<>();
 
     @Override
-    public Project getCurrentProject() {
+    public Project createNewProject() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Project create() {
+    public Project getCurrentProject() {
         throw new UnsupportedOperationException();
     }
 

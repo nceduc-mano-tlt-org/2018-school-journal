@@ -12,11 +12,6 @@ public class GroupServiceImpl implements GroupService {
     private JournalDao<Group> groupDao = new GenericInMemoryDao<>();
 
     @Override
-    public Group create() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Group remove(String id) {
         throw new UnsupportedOperationException();
     }
@@ -38,6 +33,11 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Collection<Group> findAllInCurrentProject() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Group createGroup(String name, String sectionId) {
         throw new UnsupportedOperationException();
     }
 

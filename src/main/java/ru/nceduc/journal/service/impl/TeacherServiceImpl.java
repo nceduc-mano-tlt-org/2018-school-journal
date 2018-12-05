@@ -12,11 +12,6 @@ public class TeacherServiceImpl implements TeacherService {
     private JournalDao<Teacher> teacherDao = new GenericInMemoryDao<>();
 
     @Override
-    public Teacher create() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Teacher remove(String id) {
         throw new UnsupportedOperationException();
     }
@@ -38,6 +33,11 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Collection<Teacher> findAllInCurrentProject() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Teacher createTeacher(String firstName, String lastName) {
         throw new UnsupportedOperationException();
     }
 
