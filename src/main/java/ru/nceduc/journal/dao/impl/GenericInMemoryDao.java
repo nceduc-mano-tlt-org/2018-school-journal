@@ -45,9 +45,6 @@ public class GenericInMemoryDao<E extends AbstractEntity> implements JournalDao<
         if (entity == null || StringUtils.isEmpty(entity.getId()))
             throw new IllegalArgumentException("Neither entity nor ID must not be null");
 
-        if (entities.containsKey(entity.getId()))
-            return entities.put(entity.getId(), entity);
-
-        return null;
+        return entities.put(entity.getId(), entity);
     }
 }
