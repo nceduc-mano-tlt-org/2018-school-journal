@@ -21,8 +21,8 @@ public class SectionInMemoryDaoTest {
         Project projectOne = new Project("0");
         Project projectSecond = new Project("1");
 
-        Section sectionOne = new Section("2" ,projectOne);
-        Section sectionSec = new Section("3" ,projectSecond);
+        Section sectionOne = new Section("2" ,projectOne,"Бокс");
+        Section sectionSec = new Section("3" ,projectSecond,"Балет");
 
         dao.add(sectionOne);
         dao.add(sectionSec);
@@ -53,7 +53,7 @@ public class SectionInMemoryDaoTest {
 
     @Test
     public void testAddSection() {
-        Section section = new Section("0", new Project("1"));
+        Section section = new Section("0", new Project("1"),"Бокс");
         dao.add(section);
 
         Section actual = dao.find("0");
@@ -68,13 +68,13 @@ public class SectionInMemoryDaoTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testAddTeacherOnFail_2() {
-        dao.add(new Section("", null));
+        dao.add(new Section("", null,""));
     }
 
     @Test
     public void testRemoveSection() {
-        Section sectionOne = new Section("2",new Project("0"));
-        Section sectionSec = new Section("3",new Project("1"));
+        Section sectionOne = new Section("2",new Project("0"),"Бокс");
+        Section sectionSec = new Section("3",new Project("1"),"Балет");
 
         dao.add(sectionOne);
         dao.add(sectionSec);
@@ -95,7 +95,7 @@ public class SectionInMemoryDaoTest {
 
     @Test
     public void testUpdateSection() {
-        Section section = new Section ("1", new Project("0"));
+        Section section = new Section ("1", new Project("0"),"Бокс");
         dao.update(section);
 
         Section acual = dao.find("1");
@@ -111,6 +111,6 @@ public class SectionInMemoryDaoTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testUpdateTeacherOnFail_2() {
-        dao.update(new Section("", null));
+        dao.update(new Section("", null,""));
     }
 }
