@@ -39,15 +39,16 @@ public class SectionInMemoryDaoTest {
 
         Assert.assertEquals("2", actual.getId());
         Assert.assertEquals("0", actual.getProject().getId());
+        Assert.assertEquals("Бокс", actual.getSectionName());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testFindTeacherOnFail_1() {
+    public void testFindSectionOnFail_1() {
         dao.find(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testFindTeacherOnFail_2() {
+    public void testFindSectionOnFail_2() {
         dao.find("");
     }
 
@@ -59,15 +60,16 @@ public class SectionInMemoryDaoTest {
         Section actual = dao.find("0");
         Assert.assertEquals("0",actual.getId());
         Assert.assertEquals("1",actual.getProject().getId());
+        Assert.assertEquals("Бокс", actual.getSectionName());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testAddTeacherOnFail_1() {
+    public void testAddSectionOnFail_1() {
         dao.add(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testAddTeacherOnFail_2() {
+    public void testAddSectionOnFail_2() {
         dao.add(new Section("", null,""));
     }
 
@@ -83,6 +85,7 @@ public class SectionInMemoryDaoTest {
         assertEquals(1,dao.findAll().size());
         assertEquals("3",dao.find("3").getId());
         assertEquals("1",dao.find("3").getProject().getId());
+        Assert.assertEquals("Балет", dao.find("3").getSectionName());
     }
 
     @Test
@@ -98,19 +101,20 @@ public class SectionInMemoryDaoTest {
         Section section = new Section ("1", new Project("0"),"Бокс");
         dao.update(section);
 
-        Section acual = dao.find("1");
-        Assert.assertEquals("1",acual.getId());
-        Assert.assertEquals("0",acual.getProject().getId());
+        Section actual = dao.find("1");
+        Assert.assertEquals("1",actual.getId());
+        Assert.assertEquals("0",actual.getProject().getId());
         Assert.assertFalse(dao.findAll().isEmpty());
+        Assert.assertEquals("Бокс", actual.getSectionName());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testUpdateTeacherOnFail_1() {
+    public void testUpdateSectionOnFail_1() {
         dao.update(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testUpdateTeacherOnFail_2() {
+    public void testUpdateSectionOnFail_2() {
         dao.update(new Section("", null,""));
     }
 }
