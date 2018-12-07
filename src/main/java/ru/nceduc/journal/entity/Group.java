@@ -15,11 +15,12 @@ public class Group extends BusinessEntity implements Assignable<Section> {
     private List<Student> students;
     private List<Teacher> teachers;
 
-    public Group(String id, Project project, Section section) {
+    public Group(String id, Project project, Section section , String name) {
         super(id, project);
         this.students = new ArrayList<>();
         this.teachers = new ArrayList<>();
         assignTo(section);
+        this.groupName = name;
     }
 
     void addStudent(Student student) {
