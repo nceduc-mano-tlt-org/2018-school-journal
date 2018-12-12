@@ -2,57 +2,79 @@ package ru.nceduc.journal.service.impl;
 
 import ru.nceduc.journal.dao.JournalDao;
 import ru.nceduc.journal.dao.impl.GenericInMemoryDao;
+import ru.nceduc.journal.entity.Group;
+import ru.nceduc.journal.entity.Project;
 import ru.nceduc.journal.entity.Teacher;
 import ru.nceduc.journal.service.TeacherService;
 
 import java.util.Collection;
+import java.util.UUID;
 
 public class TeacherServiceImpl implements TeacherService {
 
     private JournalDao<Teacher> teacherDao = new GenericInMemoryDao<>();
+    private JournalDao<Group> groupJournalDao = new GenericInMemoryDao<>();
 
     @Override
     public Teacher remove(String id) {
-        throw new UnsupportedOperationException();
+        return teacherDao.remove(id);
     }
 
     @Override
     public Teacher update(Teacher entity) {
-        throw new UnsupportedOperationException();
+        return teacherDao.update(entity);
     }
 
     @Override
     public Teacher find(String id) {
-        throw new UnsupportedOperationException();
+        return teacherDao.find(id);
     }
 
     @Override
     public Collection<Teacher> findAll() {
-        throw new UnsupportedOperationException();
+        return teacherDao.findAll();
     }
 
     @Override
     public Collection<Teacher> findAllInCurrentProject() {
-        throw new UnsupportedOperationException();
+        return null;
     }
 
     @Override
-    public Teacher createTeacher(String firstName, String lastName) {
-        throw new UnsupportedOperationException();
+    public Teacher createTeacher(Project project, String firstName, String lastName) {
+        UUID id = UUID.randomUUID();
+        Teacher entity = new Teacher(
+                id.toString(),
+                project,
+                firstName,
+                lastName);
+        return teacherDao.add(entity);
     }
 
     @Override
     public void assignToGroup(String teacherId, String groupId) {
-        throw new UnsupportedOperationException();
+        Teacher teacher = teacherDao.find(teacherId);
+        Group group = groupJournalDao.find(groupId);
+
+        teacher.assignTo(group);
     }
 
     @Override
-    public void reassignGroup(String oldGroupId, String newGroupId) {
-        throw new UnsupportedOperationException();
+    public void reassignGroup(String teacherId, String oldGroupId, String newGroupId) {
+        Teacher teacher = teacherDao.find(teacherId);
+        Group oldGroup = groupJournalDao.find(oldGroupId);
+        Group newGroup = groupJournalDao.find(newGroupId);
+
+        teacher.removeAssignment(oldGroup);
+        teacher.assignTo(newGroup);
     }
 
     @Override
     public void removeAssignment(String teacherId, String groupId) {
-        throw new UnsupportedOperationException();
+        Teacher teacher = teacherDao.find(teacherId);
+        Group group = groupJournalDao.find(groupId);
+
+        teacher.removeAssignment(group);
+    //    group.removeAssignment(teacher);
     }
 }
