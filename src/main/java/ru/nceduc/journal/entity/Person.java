@@ -1,8 +1,10 @@
 package ru.nceduc.journal.entity;
 
 import lombok.Data;
+import lombok.Getter;
 
 @Data
+@Getter
 public abstract class Person extends BusinessEntity {
 
     private String firstName;
