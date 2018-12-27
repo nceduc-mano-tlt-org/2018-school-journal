@@ -13,7 +13,7 @@ public class Section extends BusinessEntity {
     private String sectionName;
     private List<Group> groups;
 
-    public Section(String id, Project project) {
+    public Section(String id, Project project , String sectionName) {
         super(id, project);
         this.groups = new ArrayList<>();
     }

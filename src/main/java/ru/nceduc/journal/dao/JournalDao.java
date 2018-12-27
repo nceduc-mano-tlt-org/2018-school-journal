@@ -1,5 +1,6 @@
 package ru.nceduc.journal.dao;
 
+import java.sql.SQLException;
 import java.util.Collection;
 
 public interface JournalDao<E> {
@@ -7,7 +8,7 @@ public interface JournalDao<E> {
     /**
      * @throws IllegalArgumentException if the id is the empty string or null
      */
-    E find(String id);
+    E find(String id) throws SQLException;
 
 
     /**

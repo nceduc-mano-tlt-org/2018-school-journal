@@ -7,6 +7,7 @@ import ru.nceduc.journal.entity.Project;
 import ru.nceduc.journal.entity.Section;
 import ru.nceduc.journal.service.GroupService;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -26,7 +27,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Group find(String id) {
+    public Group find(String id) throws SQLException {
         return groupDao.find(id);
     }
 
