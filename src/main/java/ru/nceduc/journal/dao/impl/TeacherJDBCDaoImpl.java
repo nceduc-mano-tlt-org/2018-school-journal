@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 public class TeacherJDBCDaoImpl implements JournalDao<Teacher> {
 
@@ -24,9 +25,9 @@ public class TeacherJDBCDaoImpl implements JournalDao<Teacher> {
 
     @Override
     public Teacher find(String id) {
-        Connection connection = ConnectorPostgre.getConnection();
         String sql = "SELECT * FROM teacher where teacher_id = ?";
         try {
+            Connection connection = ConnectorPostgre.getInstance().getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, id);
 
@@ -43,9 +44,9 @@ public class TeacherJDBCDaoImpl implements JournalDao<Teacher> {
 
     @Override
     public Teacher add(Teacher entity) {
-        Connection connection = ConnectorPostgre.getConnection();
         String sql = "INSERT INTO teacher VALUES (?, ?, ?, ?)";
         try {
+            Connection connection = ConnectorPostgre.getInstance().getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setString(1, entity.getId());
@@ -62,9 +63,9 @@ public class TeacherJDBCDaoImpl implements JournalDao<Teacher> {
 
     @Override
     public Teacher remove(String id) {
-        Connection connection = ConnectorPostgre.getConnection();
         String sql = "DELETE FROM teacher WHERE teacher_id =?";
         try {
+            Connection connection =  ConnectorPostgre.getInstance().getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, id);
             ps.executeUpdate();
@@ -77,9 +78,9 @@ public class TeacherJDBCDaoImpl implements JournalDao<Teacher> {
 
     @Override
     public Collection<Teacher> findAll() {
-        Connection connection = ConnectorPostgre.getConnection();
         String sql = "SELECT * FROM teacher";
         try {
+            Connection connection = ConnectorPostgre.getInstance().getConnection();
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
@@ -98,9 +99,9 @@ public class TeacherJDBCDaoImpl implements JournalDao<Teacher> {
 
     @Override
     public Teacher update(Teacher entity) {
-        Connection connection = ConnectorPostgre.getConnection();
         String sql = "UPDATE teacher SET project_id=?, firstname=?, lastname=? where teacher_id =?";
         try {
+            Connection connection = ConnectorPostgre.getInstance().getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setString(1, entity.getProject().getId());
