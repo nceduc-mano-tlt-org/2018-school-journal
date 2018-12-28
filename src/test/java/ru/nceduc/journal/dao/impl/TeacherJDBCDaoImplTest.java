@@ -4,6 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import ru.nceduc.journal.dao.JournalDao;
 import ru.nceduc.journal.dao.connector.ConnectorPostgre;
 import ru.nceduc.journal.entity.Teacher;
@@ -17,11 +19,10 @@ import static org.junit.Assert.*;
 public class TeacherJDBCDaoImplTest {
 
     private JournalDao<Teacher> dao;
+    private EmbeddedPostgres embeddedPostgres;
+    private Connection connection;
 
-    @Before
-    public void setUp() throws Exception {
-        dao = new TeacherJDBCDaoImpl();
-
+    private void connect() throws Exception{
         String host = "localhost";
         int port = 5432;
         String dbname = "test-postgres";
@@ -29,25 +30,41 @@ public class TeacherJDBCDaoImplTest {
         String password = "userpas";
         String url = "jdbc:postgresql://" + host + ":" + port + "/" + dbname;
 
-        EmbeddedPostgres embeddedPostgres = new EmbeddedPostgres();
+        embeddedPostgres = new EmbeddedPostgres();
         embeddedPostgres.start(host,
-                        port,
-                        dbname,
-                        username,
-                        password);
+                port,
+                dbname,
+                username,
+                password);
 
         ConnectorPostgre.setUrl(url);
         ConnectorPostgre.setUsername(username);
         ConnectorPostgre.setPassword(password);
-        Connection connection =  ConnectorPostgre.getInstance().getConnection();
+       connection =  ConnectorPostgre.getInstance().getConnection();
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        dao = new TeacherJDBCDaoImpl();
+        connect();
+
+
+        connection.prepareStatement("");
+
+
+
+
     }
 
     @After
     public void tearDown() throws Exception {
+        dao = null;
+        embeddedPostgres.stop();
     }
 
     @Test
     public void find() {
+
     }
 
     @Test
