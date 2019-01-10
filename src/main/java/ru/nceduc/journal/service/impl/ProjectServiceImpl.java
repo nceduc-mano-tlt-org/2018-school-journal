@@ -11,6 +11,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     private JournalDao<Project> projectDao = new GenericInMemoryDao<>();
 
+    //Пока нет реализации получения текущего проекта используем постояныый
+    private Project project = new Project("0");
+
     @Override
     public Project createNewProject() {
         throw new UnsupportedOperationException();
@@ -18,7 +21,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project getCurrentProject() {
-        throw new UnsupportedOperationException();
+        // получаем постоянный проект
+        return project;
     }
 
     @Override

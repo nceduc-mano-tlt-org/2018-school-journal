@@ -6,24 +6,24 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectorOracle implements ConnectorDao {
-    private static ConnectorOracle singleton = null;
+public class ConnectorOracleDao implements ConnectorDao {
+    private static ConnectorOracleDao singleton = null;
     private Connection connection = null;
     private static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
     private static final String URL = "jdbc:oracle:thin:@sql.edu-netcracker.com:1251:xe";
     private static final String USER = "TLT_18";
     private static final String PASS = "TLT_18";
 
-    private ConnectorOracle(Connection connection) {
+    private ConnectorOracleDao(Connection connection) {
         this.connection = connection;
     }
 
-    public static ConnectorOracle getSingleton() {
+    public static ConnectorOracleDao getSingleton() {
         if (singleton == null) {
             try {
                 Class.forName(DRIVER);
                 Connection receivedConnection = DriverManager.getConnection(URL, USER, PASS);
-                singleton = new ConnectorOracle(receivedConnection);
+                singleton = new ConnectorOracleDao(receivedConnection);
             } catch (ClassNotFoundException | SQLException e) {
                 if (e instanceof ClassNotFoundException) {
                     throw new RuntimeException("JDBC Driver not found...");

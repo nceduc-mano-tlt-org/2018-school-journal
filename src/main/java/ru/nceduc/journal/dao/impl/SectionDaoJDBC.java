@@ -9,25 +9,24 @@ import java.util.Collection;
 import java.util.List;
 
 public class SectionDaoJDBC implements JournalDao<Section>{
+    Connection connection = ConnectorEmbeddedBDH2.getSingleton().getConnection();
 
     private Section getReformedResultSetInSection(ResultSet resultSet) throws SQLException {
-        String id = resultSet.getString("SECTION_ID");
-        Project project = new Project(resultSet.getString("PROJECT_ID"));
-        String name = resultSet.getString("NAME_SECTION");
+        String id = resultSet.getString("section_id");
+        Project project = new Project(resultSet.getString("section_project_id"));
+        String name = resultSet.getString("section_name");
 
         return new Section(id, project, name);
     }
 
     @Override
     public Section find(String id) {
-        Connection connection = ConnectorOracle.getSingleton().getConnection();
         String sql = "SELECT * FROM SECTIONS WHERE SECTION_ID = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                statement.close();
                 return getReformedResultSetInSection(resultSet);
             }
         } catch (SQLException e) {
@@ -38,7 +37,6 @@ public class SectionDaoJDBC implements JournalDao<Section>{
 
     @Override
     public Section add(Section entity) {
-        Connection connection = ConnectorOracle.getSingleton().getConnection();
         String sql = "INSERT INTO SECTIONS VALUES (?, ?, ?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -58,7 +56,6 @@ public class SectionDaoJDBC implements JournalDao<Section>{
 
     @Override
     public Section remove(String id) {
-        Connection connection = ConnectorOracle.getSingleton().getConnection();
         Section section = find(id);
         String sql = "DELETE FROM SECTIONS WHERE SECTION_ID = ?";
         try {
@@ -76,7 +73,6 @@ public class SectionDaoJDBC implements JournalDao<Section>{
 
     @Override
     public Collection<Section> findAll() {
-        Connection connection = ConnectorOracle.getSingleton().getConnection();
         String sql = "SELECT * FROM SECTIONS";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -95,9 +91,8 @@ public class SectionDaoJDBC implements JournalDao<Section>{
 
     @Override
     public Section update(Section entity) {
-        Connection connection = ConnectorOracle.getSingleton().getConnection();
         try {
-            String sql = "UPDATE teacher SET PROJECT_ID=?,NAME_SECTION =? WHERE SECTION_ID = ?";
+            String sql = "UPDATE sections SET section_project_id=?,section_name =? WHERE section_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, entity.getProject().getId());
             statement.setString(2, entity.getSectionName());
