@@ -1,29 +1,22 @@
 package ru.nceduc.journal;
 
-import ru.nceduc.journal.dao.Connector;
-import ru.nceduc.journal.dao.connector.ConnectorPostgre;
-import ru.nceduc.journal.service.TeacherService;
-import ru.nceduc.journal.service.impl.TeacherServiceImpl;
+import ru.nceduc.journal.dao.ConnectorDao;
+import ru.nceduc.journal.dao.connector.ConnectorPostgresqlDao;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class JournalApplication {
 
     public static void main(String args[]) throws SQLException {
-        Connector gg = new ConnectorPostgre();
-        String url = "jdbc:postgresql://thirdmadman.ddns.net:5432/school-journal";
-        final String username = "nctest";
-        final String password = "5LLgK0jA2nzdKIGt";
-        gg.getConnection(url,username,password);
-        ResultSet rs = gg.getConnection(url,username,password).createStatement().executeQuery("SELECT * FROM people WHERE surname = 'Doe'");
+        ConnectorDao gg = ConnectorPostgresqlDao.getInstance();
+        Connection ic = gg.getConnection();
+        ResultSet rs = ic.createStatement().executeQuery("SELECT student_fist_name,student_last_name FROM student");
         while(rs.next()) {
-
-            System.out.printf("%d\t%s\t%s\t%d\n",
-                    rs.getInt(1),
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getInt(4));
+            System.out.printf("%s\t%s\t\n",
+                    rs.getString(1),
+                    rs.getString(2));
         }
     }
 }
