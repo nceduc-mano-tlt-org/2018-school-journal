@@ -9,7 +9,11 @@ import java.util.Collection;
 import java.util.List;
 
 public class SectionDaoJDBC implements JournalDao<Section>{
-    Connection connection = ConnectorEmbeddedBDH2.getSingleton().getConnection();
+    Connection connection = null;
+
+    public SectionDaoJDBC(Connection connection){
+        this.connection = connection;
+    }
 
     private Section getReformedResultSetInSection(ResultSet resultSet) throws SQLException {
         String id = resultSet.getString("section_id");

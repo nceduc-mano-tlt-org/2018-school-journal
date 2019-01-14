@@ -25,7 +25,7 @@ public class SectionDaoJDBCTest {
     @Before
     public void setUp() {
         try {
-           dao = new SectionDaoJDBC();
+           dao = new SectionDaoJDBC(ConnectorEmbeddedBDH2.getSingleton().getConnection());
            connection = ConnectorEmbeddedBDH2.getSingleton().getConnection();
            String pathsProjectSQL = "src/test/java/ru/nceduc/journal/dao/impl/CreateTableProjects.sql";
            String pathsSectionSQL = "src/test/java/ru/nceduc/journal/dao/impl/CreateTableSections.sql";
