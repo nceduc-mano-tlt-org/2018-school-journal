@@ -1,22 +1,27 @@
 package ru.nceduc.journal;
 
-import ru.nceduc.journal.dao.ConnectorDao;
-import ru.nceduc.journal.dao.connector.ConnectorPostgresqlDao;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import ru.nceduc.journal.dao.impl.ProjectDaoJDBC;
+import ru.nceduc.journal.entity.Project;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 public class JournalApplication {
 
-    public static void main(String args[]) throws SQLException {
-        ConnectorDao gg = ConnectorPostgresqlDao.getInstance();
-        Connection ic = gg.getConnection();
-        ResultSet rs = ic.createStatement().executeQuery("SELECT student_fist_name,student_last_name FROM student");
-        while(rs.next()) {
-            System.out.printf("%s\t%s\t\n",
-                    rs.getString(1),
-                    rs.getString(2));
-        }
+    public static void main(String args[]) {
+
+        ProjectDaoJDBC pdjdbc = new ProjectDaoJDBC();
+
+/*        pdjdbc.findAll();
+        Project project2 = new Project("2");
+        project2.setName("My Second Project");
+        pdjdbc.add(project2);
+        pdjdbc.findAll();
+        project2.setName("My Second Project edited");
+        pdjdbc.update(project2);
+        pdjdbc.findAll();
+        pdjdbc.remove("2");
+        pdjdbc.findAll();*/
     }
 }

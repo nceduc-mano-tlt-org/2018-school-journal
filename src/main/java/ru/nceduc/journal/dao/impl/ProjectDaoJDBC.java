@@ -1,36 +1,59 @@
 package ru.nceduc.journal.dao.impl;
+
+import org.apache.commons.lang3.StringUtils;
 import ru.nceduc.journal.dao.connector.ConnectorPostgresqlDao;
 import ru.nceduc.journal.entity.Project;
-import ru.nceduc.journal.entity.Section;
 import ru.nceduc.journal.dao.JournalDao;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
 
-public class ProjectDaoJDBC implements JournalDao<Project>{
+public class ProjectDaoJDBC implements JournalDao<Project> {
 
-   // Connection connection = ConnectorEmbeddedBDH2.getSingleton().getConnection();
+    // Connection connection = ConnectorEmbeddedBDH2.getSingleton().getConnection();
     Connection connection = ConnectorPostgresqlDao.getInstance().getConnection();
 
-/*    private Project getReformedResultSetInSection(ResultSet resultSet) throws SQLException {
-        String id = resultSet.getString("section_id");
-        Project project = new Project(resultSet.getString("section_project_id"));
-        String name = resultSet.getString("section_name");
+    private String formatDate(Date date) {
+        //java.util.Date utilDate = new java.util.Date();
+        java.sql.Timestamp sq = new java.sql.Timestamp(date.getTime());
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        return sdf.format(sq);
+    }
 
-        return new Section(id, project, name);
-    }*/
+    private Date stringToDate(String date) {
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+        try {
+            return format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-    @Override
     public Project find(String id) {
-        String sql = "SELECT * FROM SECTIONS WHERE SECTION_ID = ?";
+        if (StringUtils.isEmpty(id)) {
+            throw new IllegalArgumentException("The ID must not be null");
+        }
+        String sql = "SELECT * FROM project WHERE project_id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return getReformedResultSetInSection(resultSet);
+                Project project = new Project(id,stringToDate(resultSet.getString(2)));
+                project.setName(resultSet.getString(4));
+                project.setModifiedDate(stringToDate(resultSet.getString(3)));
+                System.out.printf("%s\t%s\t%s\t%s\t\n",
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4));
+                return project;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -38,15 +61,18 @@ public class ProjectDaoJDBC implements JournalDao<Project>{
         return null;
     }
 
-    @Override
     public Project add(Project entity) {
-        String sql = "INSERT INTO SECTIONS VALUES (?, ?, ?)";
+        if (entity == null || StringUtils.isEmpty(entity.getId())) {
+            throw new IllegalArgumentException("Neither entity nor ID must not be null");
+        }
+
+        String sql = "INSERT INTO project VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, entity.getId());
-            statement.setString(2, entity.getProject().getId());
-            statement.setString(3, entity.getSectionName());
-
+            statement.setString(2, formatDate(entity.getCreatedDate()));
+            statement.setString(3, formatDate(entity.getModifiedDate()));
+            statement.setString(4, entity.getName());
             if (statement.executeUpdate() == 1) {
                 statement.close();
                 return entity;
@@ -54,19 +80,21 @@ public class ProjectDaoJDBC implements JournalDao<Project>{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
-    @Override
     public Project remove(String id) {
-        Project section = find(id);
-        String sql = "DELETE FROM SECTIONS WHERE SECTION_ID = ?";
+        if (StringUtils.isEmpty(id)) {
+            throw new IllegalArgumentException("The ID must not be null");
+        }
+        String sql = "DELETE FROM project WHERE project_id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, id);
             if (statement.executeUpdate() == 1) {
                 statement.close();
-                return section;
+                return null; // зачем возращать сущьность?
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -74,31 +102,42 @@ public class ProjectDaoJDBC implements JournalDao<Project>{
         return null;
     }
 
-    @Override
-    public Collection<Section> findAll() {
-        String sql = "SELECT * FROM SECTIONS";
+    public Collection<Project> findAll() {
+        ArrayList out = new ArrayList<Project>();
+        String sql = "SELECT * FROM project";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
-            List<Section> allSections = new ArrayList<>();
+            List<Project> all = new ArrayList<>();
             while(resultSet.next()){
-                allSections.add(getReformedResultSetInSection(resultSet));
+                Project project = new Project(resultSet.getString(1),stringToDate(resultSet.getString(2)));
+                project.setName(resultSet.getString(4));
+                project.setModifiedDate(stringToDate(resultSet.getString(3)));
+                System.out.printf("%s\t%s\t%s\t%s\t\n",
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4));
+                out.add(project);
             }
             statement.close();
-            return allSections;
+            return all;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
-    @Override
     public Project update(Project entity) {
+        if (entity == null || StringUtils.isEmpty(entity.getId())) {
+            throw new IllegalArgumentException("Neither entity nor ID must not be null");
+        }
         try {
-            String sql = "UPDATE sections SET section_project_id=?,section_name =? WHERE section_id = ?";
+            String sql = "UPDATE project SET project_modified_date =?, project_name = ? WHERE project_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, entity.getProject().getId());
-            statement.setString(2, entity.getSectionName());
+            statement.setString(1, formatDate(entity.getModifiedDate()));
+            statement.setString(2, entity.getName());
             statement.setString(3, entity.getId());
             if (statement.executeUpdate() == 1) {
                 statement.close();
@@ -107,6 +146,7 @@ public class ProjectDaoJDBC implements JournalDao<Project>{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 }
