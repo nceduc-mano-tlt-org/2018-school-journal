@@ -1,19 +1,26 @@
 package ru.nceduc.journal.service.impl;
 
 import ru.nceduc.journal.dao.JournalDao;
+import ru.nceduc.journal.dao.impl.ConnectorPostgreDao;
 import ru.nceduc.journal.dao.impl.GenericInMemoryDao;
+import ru.nceduc.journal.dao.impl.TeacherDAOJDBCdemo;
+import ru.nceduc.journal.entity.Project;
 import ru.nceduc.journal.entity.Teacher;
 import ru.nceduc.journal.service.TeacherService;
 
+import java.sql.Connection;
 import java.util.Collection;
+import java.util.UUID;
 
 public class TeacherServiceImpl implements TeacherService {
 
-    private JournalDao<Teacher> teacherDao = new GenericInMemoryDao<>();
+    Connection connection = ConnectorPostgreDao.getSingleton().getConnection();
+
+    private JournalDao<Teacher> teacherDao = new TeacherDAOJDBCdemo(connection);
 
     @Override
     public Teacher remove(String id) {
-        throw new UnsupportedOperationException();
+        return teacherDao.remove(id);
     }
 
     @Override
@@ -23,7 +30,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Teacher find(String id) {
-        throw new UnsupportedOperationException();
+        return teacherDao.find(id);
     }
 
     @Override
@@ -38,7 +45,11 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Teacher createTeacher(String firstName, String lastName) {
-        throw new UnsupportedOperationException();
+        UUID uuidTeacher = UUID.randomUUID();
+        UUID uuidProject = UUID.fromString("00000000-0000-0000-0000-000000000000");
+        Project project = new Project("00000000-0000-0000-0000-000000000000");
+        Teacher teacher = new Teacher(uuidTeacher.toString(),project,firstName,lastName);
+        return teacherDao.add(teacher);
     }
 
     @Override

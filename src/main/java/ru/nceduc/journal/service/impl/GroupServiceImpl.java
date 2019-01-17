@@ -1,19 +1,27 @@
 package ru.nceduc.journal.service.impl;
 
 import ru.nceduc.journal.dao.JournalDao;
+import ru.nceduc.journal.dao.impl.ConnectorPostgreDao;
 import ru.nceduc.journal.dao.impl.GenericInMemoryDao;
+import ru.nceduc.journal.dao.impl.GroupDAOJDBCdemo;
 import ru.nceduc.journal.entity.Group;
+import ru.nceduc.journal.entity.Project;
+import ru.nceduc.journal.entity.Section;
 import ru.nceduc.journal.service.GroupService;
 
+import java.sql.Connection;
 import java.util.Collection;
+import java.util.UUID;
 
 public class GroupServiceImpl implements GroupService {
 
-    private JournalDao<Group> groupDao = new GenericInMemoryDao<>();
+    Connection connection = ConnectorPostgreDao.getSingleton().getConnection();
+
+    private JournalDao<Group> groupDao = new GroupDAOJDBCdemo(connection);
 
     @Override
     public Group remove(String id) {
-        throw new UnsupportedOperationException();
+        return groupDao.remove(id);
     }
 
     @Override
@@ -23,7 +31,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Group find(String id) {
-        throw new UnsupportedOperationException();
+        return groupDao.find(id);
     }
 
     @Override
@@ -38,7 +46,12 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Group createGroup(String name, String sectionId) {
-        throw new UnsupportedOperationException();
+        UUID uuidProject = UUID.fromString("00000000-0000-0000-0000-000000000000");
+        UUID uuidGroup = UUID.randomUUID();
+        Project project = new Project (uuidProject.toString());
+        Section section = new Section(sectionId,project,"default");
+        Group group = new Group(uuidGroup.toString(),project,section,name);
+        return groupDao.add(group);
     }
 
     @Override

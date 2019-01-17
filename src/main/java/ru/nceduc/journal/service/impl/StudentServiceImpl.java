@@ -1,19 +1,26 @@
 package ru.nceduc.journal.service.impl;
 
 import ru.nceduc.journal.dao.JournalDao;
+import ru.nceduc.journal.dao.impl.ConnectorPostgreDao;
 import ru.nceduc.journal.dao.impl.GenericInMemoryDao;
+import ru.nceduc.journal.dao.impl.StudentDAOJDBCdemo;
+import ru.nceduc.journal.entity.Project;
 import ru.nceduc.journal.entity.Student;
 import ru.nceduc.journal.service.StudentService;
 
+import java.sql.Connection;
 import java.util.Collection;
+import java.util.UUID;
 
 public class StudentServiceImpl implements StudentService {
 
-    private JournalDao<Student> studentDao = new GenericInMemoryDao<>();
+    Connection connection = ConnectorPostgreDao.getSingleton().getConnection();
+
+    private JournalDao<Student> studentDao = new StudentDAOJDBCdemo(connection);
 
     @Override
     public Student remove(String id) {
-        throw new UnsupportedOperationException();
+        return studentDao.remove(id);
     }
 
     @Override
@@ -23,7 +30,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student find(String id) {
-        throw new UnsupportedOperationException();
+        return studentDao.find(id);
     }
 
     @Override
@@ -38,7 +45,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student createStudent(String firstName, String lastName) {
-        throw new UnsupportedOperationException();
+        UUID uuidStudent = UUID.randomUUID();
+        UUID uuidProject = UUID.fromString("00000000-0000-0000-0000-000000000000");
+        Project project = new Project(uuidProject.toString());
+        Student student = new Student(uuidStudent.toString(),project,firstName,lastName);
+        return studentDao.add(student);
     }
 
     @Override
