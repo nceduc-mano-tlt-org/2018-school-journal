@@ -27,17 +27,12 @@ public class SectionDaoJDBCTest {
         try {
            dao = new SectionDaoJDBC(ConnectorEmbeddedBDH2.getSingleton().getConnection());
            connection = ConnectorEmbeddedBDH2.getSingleton().getConnection();
-           String pathsProjectSQL = "src/test/java/ru/nceduc/journal/dao/impl/CreateTableProjects.sql";
-           String pathsSectionSQL = "src/test/java/ru/nceduc/journal/dao/impl/CreateTableSections.sql";
 
-           String sql = new String(Files.readAllBytes(Paths.get(pathsProjectSQL)));
+           String pathsSectionSQL = "src/SQL/CreateTableSections.sql";
+
+           String sql = new String(Files.readAllBytes(Paths.get(pathsSectionSQL)));
            PreparedStatement statement = connection.prepareStatement(sql);
            statement.executeUpdate();
-
-           sql = new String(Files.readAllBytes(Paths.get(pathsSectionSQL)));
-           statement = connection.prepareStatement(sql);
-           statement.executeUpdate();
-
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -48,12 +43,8 @@ public class SectionDaoJDBCTest {
     @After
     public void cleanUp() {
         try {
-        String dropProjectsTableSQL = "DROP TABLE projects";
         String dropSectionsTableSQL = "DROP TABLE sections";
-        PreparedStatement statement = connection.prepareStatement(dropProjectsTableSQL);
-        statement.executeUpdate();
-
-        statement = connection.prepareStatement(dropSectionsTableSQL);
+        PreparedStatement statement = connection.prepareStatement(dropSectionsTableSQL);
         statement.executeUpdate();
 
         connection = null;

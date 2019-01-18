@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class ConnectorPostgreDao implements ConnectorDao {
     private static ConnectorPostgreDao singleton = null;
     private Connection connection = null;
-    private static final String URL = "jdbc:postgresql://thirdmadman.ddns.net:5432/school-journal";
+    private static final String URL = "jdbc:postgresql://thirdmadman.ddns.net:5432/quikitConsoleManager";
     private static final String USER = "nctest";;
     private static final String PASS = "5LLgK0jA2nzdKIGt";
 

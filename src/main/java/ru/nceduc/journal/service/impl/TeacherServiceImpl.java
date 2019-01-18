@@ -47,7 +47,7 @@ public class TeacherServiceImpl implements TeacherService {
     public Teacher createTeacher(String firstName, String lastName) {
         UUID uuidTeacher = UUID.randomUUID();
         UUID uuidProject = UUID.fromString("00000000-0000-0000-0000-000000000000");
-        Project project = new Project("00000000-0000-0000-0000-000000000000");
+        Project project = new Project(uuidProject.toString());
         Teacher teacher = new Teacher(uuidTeacher.toString(),project,firstName,lastName);
         return teacherDao.add(teacher);
     }

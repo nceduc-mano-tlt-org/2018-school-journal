@@ -15,7 +15,7 @@ public class SectionDaoJDBC implements JournalDao<Section>{
         this.connection = connection;
     }
 
-    private Section getReformedResultSetInSection(ResultSet resultSet) throws SQLException {
+    public static Section getReformedResultSetInSection(ResultSet resultSet) throws SQLException {
         String id = resultSet.getString("section_id");
         Project project = new Project(resultSet.getString("section_project_id"));
         String name = resultSet.getString("section_name");
