@@ -1,6 +1,7 @@
 package ru.nceduc.journal.dao.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import ru.nceduc.journal.dao.connector.ConnectorEmbededDao;
 import ru.nceduc.journal.dao.connector.ConnectorPostgresqlDao;
 import ru.nceduc.journal.entity.Project;
 import ru.nceduc.journal.dao.JournalDao;
@@ -15,7 +16,37 @@ import java.util.Date;
 public class ProjectDaoJDBC implements JournalDao<Project> {
 
     // Connection connection = ConnectorEmbeddedBDH2.getSingleton().getConnection();
-    Connection connection = ConnectorPostgresqlDao.getInstance().getConnection();
+    Connection connection = null;
+
+    public ProjectDaoJDBC(boolean isTest) {
+        if (isTest) {
+            connection = ConnectorEmbededDao.getInstance().getConnection();
+            try {
+                String sql = "DROP TABLE IF EXISTS project;\n" +
+                        "CREATE TABLE project (\n" +
+                        "    project_id text NOT NULL,\n" +
+                        "    project_created_date text NOT NULL,\n" +
+                        "    project_modified_date text,\n" +
+                        "    project_name text,\n" +
+                        ");";
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.executeUpdate();
+
+//                sql = "INSERT INTO project (project_id, project_created_date, project_modified_date, project_name) VALUES\n" +
+//                        "('1',\t'2019-01-08',\t'2019-01-08', 'MyProject');";
+//                statement = connection.prepareStatement(sql);
+//                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            connection = ConnectorPostgresqlDao.getInstance().getConnection();
+        }
+    }
+
+    public ProjectDaoJDBC() {
+        connection = ConnectorPostgresqlDao.getInstance().getConnection();
+    }
 
     private String formatDate(Date date) {
         //java.util.Date utilDate = new java.util.Date();
@@ -48,12 +79,17 @@ public class ProjectDaoJDBC implements JournalDao<Project> {
                 Project project = new Project(id,stringToDate(resultSet.getString(2)));
                 project.setName(resultSet.getString(4));
                 project.setModifiedDate(stringToDate(resultSet.getString(3)));
+                System.out.println("====find=====");
                 System.out.printf("%s\t%s\t%s\t%s\t\n",
                         resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getString(4));
                 return project;
+            }
+            else {
+                System.out.println("=========");
+                System.out.println("Nothing found");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -109,6 +145,7 @@ public class ProjectDaoJDBC implements JournalDao<Project> {
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
             List<Project> all = new ArrayList<>();
+            System.out.println("=====find all====");
             while(resultSet.next()){
                 Project project = new Project(resultSet.getString(1),stringToDate(resultSet.getString(2)));
                 project.setName(resultSet.getString(4));

@@ -6,25 +6,23 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectorPostgresqlDao implements ConnectorDao {
-    private static volatile ConnectorPostgresqlDao instance;
+public class ConnectorEmbededDao implements ConnectorDao {
+    private static volatile ConnectorEmbededDao instance;
     private static Connection connection = null;
-    private static final String URL = "jdbc:postgresql://thirdmadman.ddns.net:5432/thirdmadman_test";
-    private static final String USER = "nctest";
-    private static final String PASS = "5LLgK0jA2nzdKIGt";
+    private static final String URL = "jdbc:h2:mem:database";
 
-    public static ConnectorPostgresqlDao getInstance() {
-        ConnectorPostgresqlDao localInstance = instance;
+    public static ConnectorEmbededDao getInstance() {
+        ConnectorEmbededDao localInstance = instance;
         if (localInstance == null) {
-            synchronized (ConnectorPostgresqlDao.class) {
+            synchronized (ConnectorEmbededDao.class) {
                 localInstance = instance;
                 if (localInstance == null) {
                     try {
-                        connection = DriverManager.getConnection(URL, USER, PASS);
-                        instance = localInstance = new ConnectorPostgresqlDao();
+                        connection = DriverManager.getConnection(URL);
+                        instance = localInstance = new ConnectorEmbededDao();
                     } catch (SQLException e) {
                         if (e instanceof SQLException) {
-                            throw new RuntimeException("SQL exception - wasn't connected to postgres database.");
+                            throw new RuntimeException("SQL exception - wasn't connected to local database.");
                         } else {
                             System.out.println("Connection Failed! Check output console for code exceptions.");
                             e.printStackTrace();

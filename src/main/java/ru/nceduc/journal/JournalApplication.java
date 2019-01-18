@@ -1,27 +1,35 @@
 package ru.nceduc.journal;
 
 
+import ru.nceduc.journal.dao.connector.ConnectorEmbededDao;
 import ru.nceduc.journal.dao.impl.ProjectDaoJDBC;
 import ru.nceduc.journal.entity.Project;
+import ru.nceduc.journal.service.impl.ProjectServiceImpl;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 
 public class JournalApplication {
 
     public static void main(String args[]) {
 
-        ProjectDaoJDBC pdjdbc = new ProjectDaoJDBC();
+/*        ProjectDaoJDBC pdjdbc = new ProjectDaoJDBC(true);
+        ProjectServiceImpl psi = new ProjectServiceImpl(true);
 
-/*        pdjdbc.findAll();
-        Project project2 = new Project("2");
+
+
+        psi.findAll();
+        Project project2 = psi.createNewProject();
+        psi.findAll();
         project2.setName("My Second Project");
-        pdjdbc.add(project2);
-        pdjdbc.findAll();
+        psi.update(project2);
+        psi.findAll();
         project2.setName("My Second Project edited");
-        pdjdbc.update(project2);
-        pdjdbc.findAll();
-        pdjdbc.remove("2");
-        pdjdbc.findAll();*/
+        psi.update(project2);
+        psi.findAll();
+        psi.remove(project2.getId());
+        psi.findAll();*/
     }
 }
