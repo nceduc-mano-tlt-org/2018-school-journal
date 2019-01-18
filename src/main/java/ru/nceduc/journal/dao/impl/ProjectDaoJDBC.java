@@ -5,6 +5,7 @@ import ru.nceduc.journal.dao.connector.ConnectorEmbededDao;
 import ru.nceduc.journal.dao.connector.ConnectorPostgresqlDao;
 import ru.nceduc.journal.entity.Project;
 import ru.nceduc.journal.dao.JournalDao;
+import ru.nceduc.journal.utils.DAOUtils;
 
 import java.sql.*;
 import java.text.DateFormat;
@@ -17,7 +18,7 @@ public class ProjectDaoJDBC implements JournalDao<Project> {
 
     // Connection connection = ConnectorEmbeddedBDH2.getSingleton().getConnection();
     Connection connection = null;
-
+    DAOUtils du = new DAOUtils();
     public ProjectDaoJDBC(boolean isTest) {
         if (isTest) {
             connection = ConnectorEmbededDao.getInstance().getConnection();
@@ -31,11 +32,6 @@ public class ProjectDaoJDBC implements JournalDao<Project> {
                         ");";
                 PreparedStatement statement = connection.prepareStatement(sql);
                 statement.executeUpdate();
-
-//                sql = "INSERT INTO project (project_id, project_created_date, project_modified_date, project_name) VALUES\n" +
-//                        "('1',\t'2019-01-08',\t'2019-01-08', 'MyProject');";
-//                statement = connection.prepareStatement(sql);
-//                statement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -48,23 +44,7 @@ public class ProjectDaoJDBC implements JournalDao<Project> {
         connection = ConnectorPostgresqlDao.getInstance().getConnection();
     }
 
-    private String formatDate(Date date) {
-        //java.util.Date utilDate = new java.util.Date();
-        java.sql.Timestamp sq = new java.sql.Timestamp(date.getTime());
-        //SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        return sdf.format(sq);
-    }
 
-    private Date stringToDate(String date) {
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-        try {
-            return format.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     public Project find(String id) {
         if (StringUtils.isEmpty(id)) {
@@ -77,9 +57,9 @@ public class ProjectDaoJDBC implements JournalDao<Project> {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 Project project = new Project(id);
-                project.setCreatedDate(stringToDate(resultSet.getString(2)));
+                project.setCreatedDate(du.stringToDate(resultSet.getString(2)));
                 project.setName(resultSet.getString(4));
-                project.setModifiedDate(stringToDate(resultSet.getString(3)));
+                project.setModifiedDate(du.stringToDate(resultSet.getString(3)));
                 System.out.println("====find=====");
                 System.out.printf("%s\t%s\t%s\t%s\t\n",
                         resultSet.getString(1),
@@ -107,8 +87,8 @@ public class ProjectDaoJDBC implements JournalDao<Project> {
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, entity.getId());
-            statement.setString(2, formatDate(entity.getCreatedDate()));
-            statement.setString(3, formatDate(entity.getModifiedDate()));
+            statement.setString(2, du.formatDate(entity.getCreatedDate()));
+            statement.setString(3, du.formatDate(entity.getModifiedDate()));
             statement.setString(4, entity.getName());
             if (statement.executeUpdate() == 1) {
                 statement.close();
@@ -149,9 +129,9 @@ public class ProjectDaoJDBC implements JournalDao<Project> {
             System.out.println("=====find all====");
             while(resultSet.next()){
                 Project project = new Project(resultSet.getString(1));
-                project.setCreatedDate(stringToDate(resultSet.getString(2)));
+                project.setCreatedDate(du.stringToDate(resultSet.getString(2)));
                 project.setName(resultSet.getString(4));
-                project.setModifiedDate(stringToDate(resultSet.getString(3)));
+                project.setModifiedDate(du.stringToDate(resultSet.getString(3)));
                 System.out.printf("%s\t%s\t%s\t%s\t\n",
                         resultSet.getString(1),
                         resultSet.getString(2),
@@ -175,7 +155,7 @@ public class ProjectDaoJDBC implements JournalDao<Project> {
         try {
             String sql = "UPDATE project SET project_modified_date =?, project_name = ? WHERE project_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, formatDate(entity.getModifiedDate()));
+            statement.setString(1, du.formatDate(entity.getModifiedDate()));
             statement.setString(2, entity.getName());
             statement.setString(3, entity.getId());
             if (statement.executeUpdate() == 1) {
