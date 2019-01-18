@@ -69,9 +69,4 @@ public class ProjectServiceImpl implements ProjectService {
     public Collection<Project> findAll() {
         return pdjdbc.findAll();
     }
-
-    @Override
-    public Collection<Project> findAllInCurrentProject() {
-        throw new UnsupportedOperationException();
-    }
 }

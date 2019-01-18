@@ -1,14 +1,16 @@
 package ru.nceduc.journal.entity;
 
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
+
 
 public class Project extends AbstractEntity {
+    @Setter @Getter
+    private String name;
 
     public Project(String id) {
         super(id);
-    }
-    public Project(String id, Date createDate) {
-        super(id,createDate);
+        this.name = "Noname project";
     }
 }
 

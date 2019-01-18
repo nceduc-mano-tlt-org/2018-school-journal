@@ -2,6 +2,8 @@ package ru.nceduc.journal.service;
 
 import ru.nceduc.journal.entity.Teacher;
 
+import java.util.Collection;
+
 public interface TeacherService extends GenericJournalService<Teacher> {
 
     //todo Do we need to bind a teacher with a group at once or not?
@@ -27,4 +29,6 @@ public interface TeacherService extends GenericJournalService<Teacher> {
      * @param groupId specifies the group which must be unbound from the teacher
      */
     void removeAssignment(String teacherId, String groupId);
+
+    Collection<Teacher> findAllInCurrentProject();
 }

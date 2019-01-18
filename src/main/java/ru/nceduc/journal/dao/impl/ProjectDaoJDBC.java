@@ -76,7 +76,8 @@ public class ProjectDaoJDBC implements JournalDao<Project> {
             statement.setString(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                Project project = new Project(id,stringToDate(resultSet.getString(2)));
+                Project project = new Project(id);
+                project.setCreatedDate(stringToDate(resultSet.getString(2)));
                 project.setName(resultSet.getString(4));
                 project.setModifiedDate(stringToDate(resultSet.getString(3)));
                 System.out.println("====find=====");
@@ -147,7 +148,8 @@ public class ProjectDaoJDBC implements JournalDao<Project> {
             List<Project> all = new ArrayList<>();
             System.out.println("=====find all====");
             while(resultSet.next()){
-                Project project = new Project(resultSet.getString(1),stringToDate(resultSet.getString(2)));
+                Project project = new Project(resultSet.getString(1));
+                project.setCreatedDate(stringToDate(resultSet.getString(2)));
                 project.setName(resultSet.getString(4));
                 project.setModifiedDate(stringToDate(resultSet.getString(3)));
                 System.out.printf("%s\t%s\t%s\t%s\t\n",

@@ -14,5 +14,4 @@ public interface GenericJournalService<E extends AbstractEntity> {
 
     Collection<E> findAll();
 
-    Collection<E> findAllInCurrentProject();
 }

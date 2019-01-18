@@ -2,6 +2,8 @@ package ru.nceduc.journal.service;
 
 import ru.nceduc.journal.entity.Group;
 
+import java.util.Collection;
+
 public interface GroupService extends GenericJournalService<Group> {
 
     /**
@@ -25,4 +27,6 @@ public interface GroupService extends GenericJournalService<Group> {
      * @param newSectionId specifies the section to be assigned
      */
     void reassignSection(String oldSectionId, String newSectionId);
+
+    Collection<Group> findAllInCurrentProject();
 }
