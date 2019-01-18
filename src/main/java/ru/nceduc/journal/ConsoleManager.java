@@ -1,13 +1,8 @@
 package ru.nceduc.journal;
 
 import ru.nceduc.journal.entity.*;
-
 import ru.nceduc.journal.service.*;
 import ru.nceduc.journal.service.impl.*;
-
-import java.io.IOException;
-import java.time.temporal.TemporalAccessor;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
 
@@ -89,7 +84,7 @@ public class ConsoleManager {
                     System.out.println("csection    [NameSection]            | [Создание сущности Section]");
                     System.out.println("rsection    [id]                     | [Удаление сущности Section по id ]");
                     System.out.println("fsection    [id]                     | [Поиск сущности Section по id ]");
-                    System.out.println("usection    [idSection] [idProject] [NameSection] | [Поиск сущности по id Section]");
+                    System.out.println("usection    [idSection] [idProject] [NameSection] | [Обновление сущности Section]");
                     System.out.println("fallsection [not]                    | [Вывод всех сущностей в таблице Section]");
                     System.out.println("ficpsection [not]                    | [Вывод всех сущностей в таблице Section принадлежащих текущему проекту]");
                     System.out.println("*          *           *           *           *           *           *");
