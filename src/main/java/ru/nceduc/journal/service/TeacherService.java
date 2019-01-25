@@ -3,10 +3,13 @@ package ru.nceduc.journal.service;
 import ru.nceduc.journal.entity.Project;
 import ru.nceduc.journal.entity.Teacher;
 
+import java.util.UUID;
+
 public interface TeacherService extends GenericJournalService<Teacher> {
 
     //todo Do we need to bind a teacher with a group at once or not?
-    Teacher createTeacher(Project project, String firstName, String lastName);
+    Teacher createTeacher(String id, Project project, String firstName, String lastName);
+    Teacher createTeacher(String firstName, String lastName);
 
     /**
      * Assigns the specified teacher to the group.

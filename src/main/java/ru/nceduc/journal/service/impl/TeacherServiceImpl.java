@@ -2,9 +2,11 @@ package ru.nceduc.journal.service.impl;
 
 import ru.nceduc.journal.dao.JournalDao;
 import ru.nceduc.journal.dao.impl.GenericInMemoryDao;
+import ru.nceduc.journal.dao.impl.TeacherJDBCDaoImpl;
 import ru.nceduc.journal.entity.Group;
 import ru.nceduc.journal.entity.Project;
 import ru.nceduc.journal.entity.Teacher;
+import ru.nceduc.journal.service.GroupService;
 import ru.nceduc.journal.service.TeacherService;
 
 import java.util.Collection;
@@ -12,8 +14,8 @@ import java.util.UUID;
 
 public class TeacherServiceImpl implements TeacherService {
 
-    private JournalDao<Teacher> teacherDao = new GenericInMemoryDao<>();
-    private JournalDao<Group> groupJournalDao = new GenericInMemoryDao<>();
+    private JournalDao<Teacher> teacherDao = new TeacherJDBCDaoImpl();
+    private GroupService groupService = new GroupServiceImpl();
 
     @Override
     public Teacher remove(String id) {
@@ -41,11 +43,22 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher createTeacher(Project project, String firstName, String lastName) {
-        UUID id = UUID.randomUUID();
+    public Teacher createTeacher(String id, Project project, String firstName, String lastName) {
         Teacher entity = new Teacher(
-                id.toString(),
+                id,
                 project,
+                firstName,
+                lastName);
+        return teacherDao.add(entity);
+    }
+
+    @Override
+    public Teacher createTeacher(String firstName, String lastName) {
+        UUID uuidProject = UUID.fromString("00000000-0000-0000-0000-000000000000");
+        UUID uuidTeacher = UUID.randomUUID();
+        Teacher entity = new Teacher(
+                uuidTeacher.toString(),
+                new Project(uuidProject.toString()),
                 firstName,
                 lastName);
         return teacherDao.add(entity);
@@ -54,7 +67,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void assignToGroup(String teacherId, String groupId) {
         Teacher teacher = teacherDao.find(teacherId);
-        Group group = groupJournalDao.find(groupId);
+        Group group = groupService.find(groupId);
 
         teacher.assignTo(group);
     }
@@ -62,8 +75,8 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void reassignGroup(String teacherId, String oldGroupId, String newGroupId) {
         Teacher teacher = teacherDao.find(teacherId);
-        Group oldGroup = groupJournalDao.find(oldGroupId);
-        Group newGroup = groupJournalDao.find(newGroupId);
+        Group oldGroup = groupService.find(oldGroupId);
+        Group newGroup = groupService.find(newGroupId);
 
         teacher.removeAssignment(oldGroup);
         teacher.assignTo(newGroup);
@@ -72,7 +85,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void removeAssignment(String teacherId, String groupId) {
         Teacher teacher = teacherDao.find(teacherId);
-        Group group = groupJournalDao.find(groupId);
+        Group group = groupService.find(groupId);
 
         teacher.removeAssignment(group);
     //    group.removeAssignment(teacher);

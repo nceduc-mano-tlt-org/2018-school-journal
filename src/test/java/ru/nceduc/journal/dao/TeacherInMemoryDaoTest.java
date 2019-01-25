@@ -22,9 +22,9 @@ public class TeacherInMemoryDaoTest {
 
         Project project = new Project("0");
 
-        Section section = new Section("1" ,project);
-        Group g1 = new Group("2", project, section);
-        Group g2 = new Group("3", project, section);
+        Section section = new Section("1" , project, "Boxing");
+        Group g1 = new Group("2", project, section, "A1");
+        Group g2 = new Group("3", project, section, "A2");
 
         Teacher t1 = new Teacher("4", project, "Artur", "Batrutdinov");
         Teacher t2 = new Teacher("5", project, "Garik", "Harlamov");

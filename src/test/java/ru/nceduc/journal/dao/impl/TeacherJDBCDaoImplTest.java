@@ -9,6 +9,8 @@ import java.io.FileReader;
 import ru.nceduc.journal.dao.JournalDao;
 import ru.nceduc.journal.dao.connector.ConnectorPostgre;
 import ru.nceduc.journal.entity.Teacher;
+import ru.nceduc.journal.service.TeacherService;
+import ru.nceduc.journal.service.impl.TeacherServiceImpl;
 import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
 
 import java.sql.Connection;
@@ -49,8 +51,6 @@ public class TeacherJDBCDaoImplTest {
         connect();
 
 
-        connection.prepareStatement("");
-
 
 
 
@@ -64,6 +64,8 @@ public class TeacherJDBCDaoImplTest {
 
     @Test
     public void find() {
+        TeacherService teacherService = new TeacherServiceImpl();
+        teacherService.find("0");
 
     }
 
